@@ -13,13 +13,13 @@ class SliderController extends Controller
     {
         // $this->middleware('auth:api')->except(['index']);
         $this->middleware('auth')->only(['list']);
-        $this->middleware('auth:api')->only(['store', 'update', 'delete']);
+        $this->middleware('auth:api')->only(['store', 'update', 'detroy']);
     }
 
     public function list()
     {
-        // $this->middleware('auth');
-        return view('slider.index');
+        $sliders = Slider::all();
+        return view('slider.index', compact('sliders'));
     }
     /**
      * Display a listing of the resource.
@@ -71,6 +71,7 @@ class SliderController extends Controller
         $slider = Slider::create($input);
 
         return response()->json([
+            'success' => true,
             'data' => $slider
         ]);
     }
@@ -81,6 +82,7 @@ class SliderController extends Controller
     public function show(Slider $slider)
     {
         return response()->json([
+            'success' => true,
             'data' => $slider
         ]);
     }
@@ -126,6 +128,7 @@ class SliderController extends Controller
         $slider->update($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'success',
             'data' => $slider
         ]);
@@ -140,6 +143,7 @@ class SliderController extends Controller
         $slider->delete();
 
         return response()->json([
+            'success' => true,
             'message' => 'success'
         ]);
     }
