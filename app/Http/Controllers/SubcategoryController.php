@@ -14,8 +14,8 @@ class SubcategoryController extends Controller
     public function __construct()
     {
         // $this->middleware('auth:api')->except(['index']);
-        $this->middleware('auth')->only(['lista']);
-        $this->middleware('auth:api')->only(['store', 'update', 'delete']);
+        $this->middleware('auth')->only(['list']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class SubcategoryController extends Controller
         ]);
     }
 
-    public function lista()
+    public function list()
     {
         $categories = Category::all();
         return view('subkategori.index', compact('categories'));
