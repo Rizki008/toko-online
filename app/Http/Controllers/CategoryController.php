@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
         // $this->middleware('auth:api');
         $this->middleware('auth')->only(['list']);
-        $this->middleware('auth:api')->only(['store', 'update', 'delete']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
     }
 
     public function list()
