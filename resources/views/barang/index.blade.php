@@ -1,12 +1,12 @@
 @extends('layout.app')
 
-@section('title', 'Data Kategori')
+@section('title', 'Data Product')
 
 @section('content')
     <div class="card shadow">
         <div class="card-header">
             <h4 class="card-title">
-                Data Kategori
+                Data Product
             </h4>
         </div>
         <div class="card-body">
@@ -20,6 +20,15 @@
                         <tr>
                             <th>No</th>
                             <th>Nama katagori</th>
+                            <th>Nama Subkatagori</th>
+                            <th>Nama Produk</th>
+                            <th>Harga</th>
+                            <th>Diskon Produk</th>
+                            <th>Bahan Produk</th>
+                            <th>Tags Produk</th>
+                            <th>Sku Produk</th>
+                            <th>Ukuran Produk</th>
+                            <th>Warna Produk</th>
                             <th>Deskripsi</th>
                             <th>Gambar</th>
                             <th>Aksi</th>
@@ -37,7 +46,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Form kategori</h5>
+                    <h5 class="modal-title">Form Product</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -48,9 +57,61 @@
                             <form class="form-kategori">
                                 {{-- <input type="hidden" name="type" id=""> --}}
                                 <div class="form-group">
-                                    <label for="">Nama Kategiri</label>
-                                    <input type="text" class="form-control" name="nama_kategori" id="nama_kategori"
-                                        placeholder="Nama Kategori" required>
+                                    <label for="">Nama Produk</label>
+                                    <input type="text" class="form-control" name="nama_barang" id="nama_barang"
+                                        placeholder="Nama Produk" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Nama Kategori</label>
+                                    <select name="id_kategori" id="id_kategori" class="form-control">
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->nama_kategori }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Nama Subkategori</label>
+                                    <select name="id_subkategori" id="id_subkategori" class="form-control">
+                                        @foreach ($subcategories as $subcategory)
+                                            <option value="{{ $subcategory->id }}">{{ $subcategory->nama_subkategori }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Harga Produk</label>
+                                    <input type="text" class="form-control" name="harga" id="harga"
+                                        placeholder="Harga Produk" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Diskon Produk</label>
+                                    <input type="text" class="form-control" name="diskon" id="diskon"
+                                        placeholder="Diskon Produk" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Bahan Produk</label>
+                                    <input type="text" class="form-control" name="bahan" id="bahan"
+                                        placeholder="Nama Produk" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Tags Produk</label>
+                                    <input type="text" class="form-control" name="tags" id="tags"
+                                        placeholder="Tags Produk" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">SKU Produk</label>
+                                    <input type="text" class="form-control" name="sku" id="sku"
+                                        placeholder="SKU Produk" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Ukuran Produk</label>
+                                    <input type="text" class="form-control" name="ukuran" id="ukuran"
+                                        placeholder="Ukuran Produk" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Warna</label>
+                                    <input type="text" class="form-control" name="warna" id="warna"
+                                        placeholder="Warna Produk" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Deskripsi Kategiri</label>
@@ -83,7 +144,7 @@
         $(function() {
 
             $.ajax({
-                url: '/api/categories',
+                url: '/api/products',
                 success: function({
                     data
                 }) {
@@ -94,9 +155,18 @@
                         row += `
                         <tr>
                             <td>${index+1}</td>
-                            <td>${val.nama_kategori}</td>
+                            <td>${val.nama_barang}</td>
+                            <td>${val.category.nama_kategori}</td>
+                            <td>${val.subcategory.nama_subkategori}</td>
+                            <td>${val.harga}</td>
+                            <td>${val.diskon}</td>
+                            <td>${val.bahan}</td>
+                            <td>${val.tags}</td>
+                            <td>${val.sku}</td>
+                            <td>${val.ukuran}</td>
+                            <td>${val.warna}</td>
                             <td>${val.deskripsi}</td>
-                            <td><img src="/uploads/${val.gambar}" width="150"></td>
+                            <td><img src="/uploads/product/${val.gambar}" width="150"></td>
                             <td>
                                 <a data-toggle="modal" herf="#modal-form" data-id="${val.id}" class="btn btn-warning modal-ubah">Edit</a>
                                 <a herf="#" data-id="${val.id}" class="btn btn-danger btn-hapus">Hapus</a>
@@ -120,7 +190,7 @@
 
                 if (confirm_dialog) {
                     $.ajax({
-                        url: '/api/categories/' + id,
+                        url: '/api/products/' + id,
                         type: "DELETE",
                         beforeSend: function(xhr) {
                             xhr.setRequestHeader('Authorization', 'Bearer' + token);
@@ -145,7 +215,16 @@
 
             $('.modal-tambah').click(function() {
                 $('#modal-form').modal('show');
+                $('input[name="nama_barang"]').val('');
                 $('input[name="nama_kategori"]').val('');
+                $('input[name="nama_subkategori"]').val('');
+                $('input[name="harga"]').val('');
+                $('input[name="diskon"]').val('');
+                $('input[name="bahan"]').val('');
+                $('input[name="tags"]').val('');
+                $('input[name="sku"]').val('');
+                $('input[name="ukuran"]').val('');
+                $('input[name="warna"]').val('');
                 $('input[textarea="deskripsi"]').val('');
 
                 $('.form-kategori').submit(function(e) {
@@ -156,7 +235,7 @@
                     // console.log(frmdata);
                     // return
                     $.ajax({
-                        url: 'api/categories',
+                        url: 'api/products',
                         type: 'POST',
                         data: frmdata,
                         cache: false,
@@ -181,10 +260,19 @@
                 $('#modal-form').modal('show');
                 const id = $(this).data('id');
 
-                $.get('/api/categories/' + id, function({
+                $.get('/api/products/' + id, function({
                     data
                 }) {
+                    $('input[name="nama_barang"]').val(data.nama_barang);
                     $('input[name="nama_kategori"]').val(data.nama_kategori);
+                    $('input[name="nama_subkategori"]').val(data.nama_subkategori);
+                    $('input[name="harga"]').val(data.harga);
+                    $('input[name="diskon"]').val(data.diskon);
+                    $('input[name="bahan"]').val(data.bahan);
+                    $('input[name="tags"]').val(data.tags);
+                    $('input[name="sku"]').val(data.sku);
+                    $('input[name="ukuran"]').val(data.ukuran);
+                    $('input[name="warna"]').val(data.warna);
                     $('textarea[name="deskripsi"]').val(data.deskripsi);
                 });
                 $('.form-kategori').submit(function(e) {
@@ -195,7 +283,7 @@
                     // console.log(frmdata);
                     // return
                     $.ajax({
-                        url: `api/categories/${id}?_method=PUT`,
+                        url: `api/products/${id}?_method=PUT`,
                         type: 'POST',
                         data: frmdata,
                         cache: false,
