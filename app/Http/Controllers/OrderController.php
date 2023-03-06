@@ -11,14 +11,47 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => 'index']);
+        // $this->middleware('auth:api');
+        $this->middleware('auth')->only(['list', 'dikonfirmasi_list', 'dikemas_list', 'dikirim_list', 'diterima_list', 'selesai_list']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy', 'ubah_status', 'baru', 'dikonfirmasi', 'dikemas', 'dikirim', 'diterima', 'selesai']);
+    }
+    public function list()
+    {
+        // $this->middleware('auth');
+        return view('pesanan.index');
+    }
+    public function dikonfirmasi_list()
+    {
+        // $this->middleware('auth');
+        return view('pesanan.dikonfirmasi');
+    }
+    public function dikemas_list()
+    {
+        // $this->middleware('auth');
+        return view('pesanan.dikemas');
+    }
+    public function dikirim_list()
+    {
+        // $this->middleware('auth');
+        return view('pesanan.dikirim');
+    }
+    public function diterima_list()
+    {
+        // $this->middleware('auth');
+        return view('pesanan.diterima');
+    }
+    public function selesai_list()
+    {
+        // $this->middleware('auth');
+        return view('pesanan.selesai');
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $orders = Order::all();
+        // $orders = Order::all();
+        $orders = Order::with('member')->get();
 
         return response()->json([
             'data' => $orders
@@ -121,53 +154,69 @@ class OrderController extends Controller
         ]);
     }
 
-    public function ubah_status(Request $request, Order $Order)
+    public function ubah_status(Request $request, Order $order)
     {
-        $Order->update([
+        // dd($order);
+        $order->update([
             'status' => $request->status
         ]);
         return response()->json([
-            'message' => 'Success',
-            'data' => $Order
+            'success' => true,
+            'message' => 'success',
+            'data' => $order
+        ]);
+    }
+    public function baru()
+    {
+        $orders = Order::with('member')->where('status', 'Baru')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $orders
         ]);
     }
     public function dikonfirmasi()
     {
-        $orders = Order::where('status', 'Dikonfirmasi')->get();
+        $orders = Order::with('member')->where('status', 'Dikonfirmasi')->get();
 
         return response()->json([
+            'success' => true,
             'data' => $orders
         ]);
     }
     public function dikemas()
     {
-        $orders = Order::where('status', 'Dikemas')->get();
+        $orders = Order::with('member')->where('status', 'Dikemas')->get();
 
         return response()->json([
+            'success' => true,
             'data' => $orders
         ]);
     }
     public function dikirim()
     {
-        $orders = Order::where('status', 'Dikirim')->get();
+        $orders = Order::with('member')->where('status', 'Dikirim')->get();
 
         return response()->json([
+            'success' => true,
             'data' => $orders
         ]);
     }
     public function diterima()
     {
-        $orders = Order::where('status', 'Diterima')->get();
+        $orders = Order::with('member')->where('status', 'Diterima')->get();
 
         return response()->json([
+            'success' => true,
             'data' => $orders
         ]);
     }
     public function selesai()
     {
-        $orders = Order::where('status', 'Selesai')->get();
+        $orders = Order::with('member')->where('status', 'Selesai')->get();
 
         return response()->json([
+            'success' => true,
             'data' => $orders
         ]);
     }
@@ -180,6 +229,7 @@ class OrderController extends Controller
         $order->delete();
 
         return response()->json([
+            'success' => true,
             'message' => 'Success'
         ]);
     }
