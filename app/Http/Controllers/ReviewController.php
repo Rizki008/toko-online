@@ -12,7 +12,7 @@ class ReviewController extends Controller
     {
         // $this->middleware('auth:api')->except(['index']);
         $this->middleware('auth')->only(['list']);
-        $this->middleware('auth:api')->only(['store', 'update', 'delete']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
     }
 
     public function list()
@@ -64,6 +64,7 @@ class ReviewController extends Controller
         $review = Review::create($input);
 
         return response()->json([
+            'success' => true,
             'data' => $review
         ]);
     }
@@ -109,7 +110,8 @@ class ReviewController extends Controller
         $review->update($input);
 
         return response()->json([
-            'message' => 'Success',
+            'success' => true,
+            'message' => 'success',
             'data' => $review
         ]);
     }
@@ -122,7 +124,8 @@ class ReviewController extends Controller
         $review->delete();
 
         return response()->json([
-            'message' => 'Success'
+            'success' => true,
+            'message' => 'success'
         ]);
     }
 }
