@@ -53,7 +53,7 @@
                                     <input type="text" class="form-control" name="nama_subkategori" id="nama_subkategori"
                                         placeholder="Nama subkategori" required>
                                 </div>
-                                <div class="form-grou">
+                                <div class="form-group">
                                     <label for="">Nama Kategori</label>
                                     <select name="id_kategori" id="id_kategori" class="form-control">
                                         @foreach ($categories as $category)
