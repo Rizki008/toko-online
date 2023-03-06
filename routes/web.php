@@ -50,4 +50,13 @@ Route::get('/testimoni', [App\Http\Controllers\TestimoniController::class, 'list
 Route::get('/review', [App\Http\Controllers\ReviewController::class, 'list'])->name('review');
 
 
+// Route::get('/pesanan/baru', [OrderController::class], 'list');
+Route::get('/pesanan/baru', [App\Http\Controllers\OrderController::class, 'list'])->name('pesanan/baru');
+Route::get('/pesanan/dikonfirmasi', [App\Http\Controllers\OrderController::class, 'dikonfirmasi_list'])->name('pesanan/dikonfirmasi');
+Route::get('/pesanan/dikemas', [App\Http\Controllers\OrderController::class, 'dikemas_list'])->name('pesanan/dikemas');
+Route::get('/pesanan/dikirim', [App\Http\Controllers\OrderController::class, 'dikirim_list'])->name('pesanan/dikirim');
+Route::get('/pesanan/selesai', [App\Http\Controllers\OrderController::class, 'selesai_list'])->name('pesanan/selesai');
+Route::get('/pesanan/diterima', [App\Http\Controllers\OrderController::class, 'diterima_list'])->name('pesanan/diterima');
+
+
 Route::get('/dashboard', [DashboardController::class, 'index']);
