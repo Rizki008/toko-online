@@ -96,7 +96,7 @@
                             <td>${index+1}</td>
                             <td>${val.nama_kategori}</td>
                             <td>${val.deskripsi}</td>
-                            <td><img src="/uploads/${val.gambar}" width="150"></td>
+                            <td><img src="/uploads/kategori/${val.gambar}" width="150"></td>
                             <td>
                                 <a data-toggle="modal" herf="#modal-form" data-id="${val.id}" class="btn btn-warning modal-ubah">Edit</a>
                                 <a herf="#" data-id="${val.id}" class="btn btn-danger btn-hapus">Hapus</a>
