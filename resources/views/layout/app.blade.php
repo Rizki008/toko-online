@@ -91,6 +91,11 @@
                     <span>Laporan Pesanan</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/payment">
+                    <i class="fas fa-fw fa-credit-card"></i>
+                    <span>Pembayaran</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/logout">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Log-Out</span></a>
