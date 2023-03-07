@@ -58,5 +58,6 @@ Route::get('/pesanan/dikirim', [App\Http\Controllers\OrderController::class, 'di
 Route::get('/pesanan/selesai', [App\Http\Controllers\OrderController::class, 'selesai_list'])->name('pesanan/selesai');
 Route::get('/pesanan/diterima', [App\Http\Controllers\OrderController::class, 'diterima_list'])->name('pesanan/diterima');
 
+Route::get('/laporan', [App\Http\Controllers\ReportController::class, 'index'])->name('laporan');
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
