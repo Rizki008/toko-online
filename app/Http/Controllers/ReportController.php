@@ -9,10 +9,11 @@ class ReportController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => 'index']);
+        $this->middleware('auth')->only('index');
+        $this->middleware('auth:api')->only('get_reports');
     }
 
-    public function index(Request $request)
+    public function get_reports(Request $request)
     {
         $report = DB::table('order_details')
             ->join('products', 'products.id', '=', 'order_details.id_produk')
@@ -30,5 +31,9 @@ class ReportController extends Controller
         return response()->json([
             'data' => $report
         ]);
+    }
+    public function index()
+    {
+        return view('report.index');
     }
 }
