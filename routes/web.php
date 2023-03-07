@@ -34,6 +34,14 @@ Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 Route::get('logout', [AuthController::class, 'logout']);
 
+//auth member
+Route::get('login_member', [AuthController::class, 'login_member']);
+Route::post('login_member', [AuthController::class, 'login_member_action']);
+Route::get('logout_member', [AuthController::class, 'logout_member']);
+//auth
+Route::get('register', [AuthController::class, 'register']);
+Route::post('register', [AuthController::class, 'register_action']);
+
 //kategori
 // Route::get('/kategori', [CategoryController::class], 'list');
 // Route::get('/subkategori', [SubcategoryController::class], 'index');
