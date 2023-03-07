@@ -48,6 +48,7 @@ Route::get('/slider', [App\Http\Controllers\SliderController::class, 'list'])->n
 Route::get('/barang', [App\Http\Controllers\ProductController::class, 'list'])->name('barang');
 Route::get('/testimoni', [App\Http\Controllers\TestimoniController::class, 'list'])->name('testimoni');
 Route::get('/review', [App\Http\Controllers\ReviewController::class, 'list'])->name('review');
+Route::get('/payment', [App\Http\Controllers\PaymentController::class, 'list'])->name('payment');
 
 
 // Route::get('/pesanan/baru', [OrderController::class], 'list');
