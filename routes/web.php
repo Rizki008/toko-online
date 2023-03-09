@@ -65,6 +65,8 @@ Route::get('/pesanan/selesai', [App\Http\Controllers\OrderController::class, 'se
 Route::get('/pesanan/diterima', [App\Http\Controllers\OrderController::class, 'diterima_list'])->name('pesanan/diterima');
 
 Route::get('/laporan', [App\Http\Controllers\ReportController::class, 'index'])->name('laporan');
+Route::get('/tentang', [App\Http\Controllers\TentangController::class, 'index'])->name('tentang');
+Route::post('/tentang/{about}', [App\Http\Controllers\TentangController::class, 'update'])->name('tentang');
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
