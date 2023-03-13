@@ -250,7 +250,7 @@
                                         <span>$730.00</span>
                                     </del> --}}
                                     <ins>
-                                        <span class="amount">Rp. {{ number_format($latest_product->harga) }}</span>
+                                        <span class="amount">Rp. {{ number_format($product->harga) }}</span>
                                     </ins>
                                 </span>
                             </div>
