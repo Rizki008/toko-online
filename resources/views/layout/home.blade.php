@@ -66,7 +66,11 @@
                                 <div class="logo-container">
                                     <div class="logo-wrap">
                                         <a href="index.html">
-                                            <img class="logo-dark2" src="/frontend/img/logo_dark.png" alt="logo">
+                                            @php
+                                                $about = App\Models\About::first();
+                                            @endphp
+                                            <img class="logo-dark2" src="/uploads/about/{{ $about->logo }}"
+                                                alt="logo">
                                         </a>
                                     </div>
                                 </div>
@@ -100,7 +104,9 @@
                                         <li class="dropdown">
                                             <a href="/about">About</a>
                                         </li>
-
+                                        @php
+                                            $categories = App\Models\Category::all();
+                                        @endphp
                                         <li class="dropdown">
                                             <a href="#">Shop</a>
                                             <i class="fa fa-angle-down dropdown-trigger"></i>
@@ -108,19 +114,24 @@
                                                 <li>
                                                     <div class="megamenu-wrap container">
                                                         <div class="row">
-
-                                                            <div class="col-md-3 megamenu-item">
-                                                                <ul class="menu-list">
-                                                                    <li>
-                                                                        <span>Shop Pages</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="/products/1">Catalog no
-                                                                            Sidebar</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
+                                                            @foreach ($categories as $category)
+                                                                <div class="col-md-3 megamenu-item">
+                                                                    <ul class="menu-list">
+                                                                        <li>
+                                                                            <span>{{ $category->nama_kategori }}</span>
+                                                                        </li>
+                                                                        @php
+                                                                            $subcategories = App\Models\Subcategory::where('id_kategori', $category->id)->get();
+                                                                        @endphp
+                                                                        @foreach ($subcategories as $subcategory)
+                                                                            <li>
+                                                                                <a
+                                                                                    href="/products/{{ $subcategory->id }}">{{ $subcategory->nama_subkategori }}</a>
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </li>
