@@ -71,10 +71,10 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_member' => 'required',
-            'provinsi' => 'required',
-            'kabupaten' => 'required',
-            'kecamatan' => 'required',
-            'detail_alamat' => 'required',
+            // 'provinsi' => 'required',
+            // 'kabupaten' => 'required',
+            // 'kecamatan' => 'required',
+            // 'detail_alamat' => 'required',
             'no_hp' => 'required',
             'email' => 'required|email',
             'password' => 'required|same:konfirmasi_password',
@@ -91,6 +91,7 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($request->password);
+        // $input['password'] = Hash::make($request->password);
         unset($input['konfirmasi_password']);
         // $member = Member::create($input);
         Member::create($input);
@@ -124,16 +125,19 @@ class AuthController extends Controller
             return redirect('/login_member');
         }
 
+        $credentials = $request->only('email', 'password');
         $member = Member::where('email', $request->email)->first();
 
         if ($member) {
-            if (Hash::check($request->password, $member->password)) {
+            if (Auth::guard('webmember')->attempt($credentials)) {
+                // if (Hash::check($request->password, $member->password)) {
                 $request->session()->regenerate();
                 // return response()->json([
                 //     'message' => 'Success',
                 //     'data' => $member
                 // ]);
-                echo "Login Berhasil";
+                // echo "Login Berhasil";
+                return redirect('/');
             } else {
                 // return response()->json([
                 //     'message' => 'failed',
@@ -162,8 +166,9 @@ class AuthController extends Controller
 
     public function logout_member()
     {
+        Auth::guard('webmember')->logout();
         Session::flush();
-
-        redirect('/login_member');
+        return redirect('/');
+        // redirect('/login_member');
     }
 }
