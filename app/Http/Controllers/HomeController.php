@@ -8,11 +8,13 @@ use App\Models\Product;
 use App\Models\Slider;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        // dd(Auth::guard('webmember')->user());
         $sliders = Slider::all();
         $categories = Category::all();
         $testimonis = Testimoni::all();
