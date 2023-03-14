@@ -322,7 +322,7 @@
     <script type="text/javascript" src="/frontend/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/frontend/js/plugins.js"></script>
     <script type="text/javascript" src="/frontend/js/scripts.js"></script>
-
+    @stack('js')
 </body>
 
 </html>
