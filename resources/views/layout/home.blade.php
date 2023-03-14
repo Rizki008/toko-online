@@ -163,7 +163,11 @@
                             <div class="flex-child flex-right nav-right hidden-sm hidden-xs">
                                 <ul>
                                     <li class="nav-register">
-                                        <a href="/login_member">Login</a>
+                                        @if (Auth::guard('webmember')->check())
+                                            <a href="/profile">{{ Auth::guard('webmember')->user()->nama_member }}</a>
+                                        @else
+                                            <a href="/login_member">Login</a>
+                                        @endif
                                     </li>
                                     <li class="nav-search-wrap style-2 hidden-sm hidden-xs">
                                         <a href="#" class="nav-search search-trigger">
@@ -177,7 +181,11 @@
                                                 </a>
                                             </div>
                                         </div>
-
+                                    </li>
+                                    <li class="nav-register">
+                                        @if (Auth::guard('webmember')->check())
+                                            <a href="/logout_member">Logout</a>
+                                        @endif
                                     </li>
                                 </ul>
                             </div>
