@@ -94,7 +94,9 @@
                             $colors = explode(',', $product->warna);
                         @endphp
                         @foreach ($colors as $color)
-                            <a href="#" class="color">{{ $color }}</a>
+                            <input type="radio" name="color" id="{{ $color }}" value="{{ $color }}"
+                                class="color">
+                            <label for="{{ $color }}" style="margin-right: 20px">{{ $color }}</label>
                         @endforeach
                         {{-- <a href="#" class="swatch-violet"></a>
                         <a href="#" class="swatch-black"></a>
@@ -108,7 +110,9 @@
                             $sizes = explode(',', $product->ukuran);
                         @endphp
                         @foreach ($sizes as $size)
-                            <a href="#" class="size">{{ $size }}</a>
+                            <input type="radio" name="size" id="{{ $size }}" value="{{ $size }}"
+                                class="size">
+                            <label for="{{ $size }}" style="margin-right: 20px">{{ $size }}</label>
                         @endforeach
                     </div>
 
@@ -117,7 +121,7 @@
 
                         <div class="quantity buttons_added">
                             <input type="number" step="1" min="0" value="1" title="Qty"
-                                class="input-text qty text" />
+                                class="input-text jumlah qty text" />
                             <div class="quantity-adjust">
                                 <a href="#" class="plus">
                                     <i class="fa fa-angle-up"></i>
@@ -128,7 +132,7 @@
                             </div>
                         </div>
 
-                        <a href="/cart" class="btn btn-dark btn-lg add-to-cart"><span>Add to Cart</span></a>
+                        <a href="#" class="btn btn-dark btn-lg add-to-cart"><span>Add to Cart</span></a>
 
                         <a href="#" class="product-add-to-wishlist"><i class="fa fa-heart"></i></a>
                     </div>
@@ -216,13 +220,13 @@
             <div class="row">
 
                 <div id="owl-related-items" class="owl-carousel owl-theme">
-                    @foreach ($latest_products as $product)
+                    @foreach ($latest_products as $produk)
                         <div class="product">
                             <div class="product-item hover-trigger">
                                 <div class="product-img">
-                                    <a href="/products/{{ $product->id }}">
-                                        <img src="/uploads/product/{{ $product->gambar }}" alt="">
-                                        <img src="/uploads/product/{{ $product->gambar }}" alt=""
+                                    <a href="/products/{{ $produk->id }}">
+                                        <img src="/uploads/product/{{ $produk->gambar }}" alt="">
+                                        <img src="/uploads/product/{{ $produk->gambar }}" alt=""
                                             class="back-img">
                                     </a>
                                     {{-- <div class="product-label">
@@ -235,14 +239,14 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <a href="{{ $product->id }}" class="product-quickview">More</a>
+                                    <a href="{{ $produk->id }}" class="product-quickview">More</a>
                                 </div>
                                 <div class="product-details">
                                     <h3 class="product-title">
-                                        <a href="shop-single.html">{{ $product->nama_barang }}</a>
+                                        <a href="shop-single.html">{{ $produk->nama_barang }}</a>
                                     </h3>
                                     <span class="category">
-                                        <a href="catalogue-grid.html">{{ $product->subcategory->nama_subkategori }}</a>
+                                        <a href="catalogue-grid.html">{{ $produk->subcategory->nama_subkategori }}</a>
                                     </span>
                                 </div>
                                 <span class="price">
@@ -250,7 +254,7 @@
                                         <span>$730.00</span>
                                     </del> --}}
                                     <ins>
-                                        <span class="amount">Rp. {{ number_format($product->harga) }}</span>
+                                        <span class="amount">Rp. {{ number_format($produk->harga) }}</span>
                                     </ins>
                                 </span>
                             </div>
@@ -263,3 +267,42 @@
         </div>
     </section> <!-- end related products -->
 @endsection
+
+@push('js')
+    <script>
+        $(function() {
+            $('.add-to-cart').click(function(e) {
+                id_member = {{ Auth::guard('webmember')->user()->id }}
+                id_barang = {{ $product->id }}
+                jumlah = $('.jumlah').val()
+                size = $('.size').val()
+                color = $('.color').val()
+                total = {{ $product->harga }} * jumlah
+                is_checkout = 0
+
+                $.ajax({
+                    url: '/add_to_cart',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    },
+                    // beforeSend: function(xhr) {
+                    //     xhr.setRequestHeader('Authorization', 'Bearer' + token);
+                    // },
+                    data: {
+                        id_member,
+                        id_barang,
+                        jumlah,
+                        size,
+                        color,
+                        total,
+                        is_checkout,
+                    },
+                    success: function(data) {
+                        window.location.href = '/cart'
+                    }
+                });
+            })
+        })
+    </script>
+@endpush
